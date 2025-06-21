@@ -1,12 +1,22 @@
 # UOFiddler
 
-## Fork Information
+This is a fork of [UOFiddler](https://github.com/polserver/UOFiddler).
 
-This is a fork of [UOFiddler](https://github.com/polserver/UOFiddler) with additional features and improvements.
+## Gump Creator Plugin
+This fork includes a powerful Gump Creator plugin.
 
-### Added Features
+### Features
+- Gump visualization
+- Drag and drop gump creation
+- Gump object properties editing
+- Exporting gump to POL
+- Hotkeys (Copy, Paste, Ctrl + Arrow for moving elements, Delete, etc.)
+- Resizing elements
+- Exporting gump to file and load it later
 
-- **GumpCreator Plugin**: A plugin for creating and editing gumps located in `UoFiddler.Plugin.GumpCreator/`
+![Gump Creator](example.png)
+
+If you like this plugin, you can [buy me a coffee](https://coff.ee/elanon).
 
 ## About
 
