@@ -13,7 +13,7 @@ namespace UoFiddler.Plugin.GumpCreator.UserControls
         private PropertyGrid _propertyGrid;
         private Panel _gumpSettingsPanel;
         private CheckBox _closableCheckBox, _movableCheckBox, _disposableCheckBox;
-        private Button _exportButton;
+        private Button _exportButton, _exportUOXButton;
         private Button _saveGumpButton;
         private Button _loadGumpButton;
         private FlowLayoutPanel _fileButtonsPanel; // To hold save/load/export
@@ -118,20 +118,28 @@ namespace UoFiddler.Plugin.GumpCreator.UserControls
                 Dock = DockStyle.Bottom, 
                 FlowDirection = FlowDirection.TopDown, 
                 AutoSize = true, 
-                AutoSizeMode = AutoSizeMode.GrowAndShrink, // Ensure it fits content
-                Padding = new Padding(5)
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                Padding = new Padding(10, 5, 10, 5),
+                WrapContents = false
             };
 
-            _saveGumpButton = new Button { Text = "Save Gump to File...", Width = 150, Height = 30, Margin = new Padding(3) };
+            _saveGumpButton = new Button { Text = "Save Gump to File...", Width = 200, Height = 35, Margin = new Padding(0, 2, 0, 2) };
             _saveGumpButton.Click += SaveGumpButton_Click;
 
-            _loadGumpButton = new Button { Text = "Load Gump from File...", Width = 150, Height = 30, Margin = new Padding(3) };
+            _loadGumpButton = new Button { Text = "Load Gump from File...", Width = 200, Height = 35, Margin = new Padding(0, 2, 0, 2) };
             _loadGumpButton.Click += LoadGumpButton_Click;
 
-            _exportButton = new Button { Text = "Export to POL", Width = 150, Height = 30, Margin = new Padding(3) };
+            _exportButton = new Button { Text = "Export to POL", Width = 200, Height = 35, Margin = new Padding(0, 2, 0, 2) };
             _exportButton.Click += ExportButton_Click;
 
-            _fileButtonsPanel.Controls.AddRange(new Control[] { _saveGumpButton, _loadGumpButton, _exportButton });
+            _exportUOXButton = new Button { Text = "Export to UOX", Width = 200, Height = 35, Margin = new Padding(0, 2, 0, 2) };
+            _exportUOXButton.Click += ExportUOXButton_Click;
+
+            // Add buttons one by one to ensure vertical layout
+            _fileButtonsPanel.Controls.Add(_saveGumpButton);
+            _fileButtonsPanel.Controls.Add(_loadGumpButton);
+            _fileButtonsPanel.Controls.Add(_exportButton);
+            _fileButtonsPanel.Controls.Add(_exportUOXButton);
             
             // Order of adding controls matters for Dock.Bottom
             this.Controls.Add(_propertyGrid);      // Fills remaining space
@@ -304,6 +312,13 @@ namespace UoFiddler.Plugin.GumpCreator.UserControls
             // Get canvas items from the main control
             var canvasItems = _gumpCreatorControlRef.GetCurrentCanvasItems(); 
             PolGumpExporter.Export(this, canvasItems, IsGumpClosable, IsGumpMovable, IsGumpDisposable);
+        }
+
+        private void ExportUOXButton_Click(object sender, EventArgs e)
+        {
+            // Get canvas items from the main control
+            var canvasItems = _gumpCreatorControlRef.GetCurrentCanvasItems(); 
+            UOXGumpExporter.Export(this, canvasItems, IsGumpClosable, IsGumpMovable, IsGumpDisposable);
         }
 
         protected override void Dispose(bool disposing)
